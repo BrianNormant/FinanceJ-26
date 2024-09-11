@@ -1,0 +1,54 @@
+<settings
+  xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0
+  http://maven.apache.org/xsd/settings-1.0.0.xsd">
+  <localRepository/>
+  <interactiveMode/>
+  <usePluginRegistry/>
+  <offline/>
+  <pluginGroups/>
+  <servers>
+    <server>
+      <id>${host}</id>
+      <username>${admin-username}</username>
+      <password>${admin-password}</password>
+          <!-- privateKey>${user.home}/.ssh/id_dsa</privateKey -->
+          <!-- passphrase>some_passphrase</passphrase -->
+      <filePermissions>664</filePermissions>
+      <directoryPermissions>775</directoryPermissions>
+    </server>
+  </servers>
+  <mirrors/>
+  <proxies>
+    <proxy>
+      <active>true</active>
+      <protocol>http</protocol>
+      <host>proxy.logti.etsmtl.ca</host>
+      <port>3128</port>
+      <nonProxyHosts>www.google.com|*.somewhere.com</nonProxyHosts>
+    </proxy>
+  </proxies>
+
+  <profiles>
+    <profile>
+      <!-- Profil pour le cours LOG240 -->
+      <id>ets-log240</id>
+      <properties>
+        <!-- Parametres de la machine virtuelle et son administrateur -->
+        <host>log240-20121-X.logti.etsmtl.ca</host>
+        <admin-username>MyAdminUser</admin-username>
+        <admin-password>MyAdminPassword</admin-password>
+        
+        <!-- Parametres de TRAC -->
+        <trac-username>MyTracUser</trac-username>
+        <trac-password>MyTracPasswd</trac-password>
+      </properties>
+    </profile>
+  </profiles>
+
+  <activeProfiles>
+    <activeProfile>ets-log240</activeProfile>
+  </activeProfiles>
+
+</settings>
