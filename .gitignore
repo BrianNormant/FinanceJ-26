@@ -3,3 +3,5 @@ target
 .classpath
 .project
 result
+FinanceJDB
+derby.log
