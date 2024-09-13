@@ -22,7 +22,7 @@
   <mirrors/>
   <proxies>
     <proxy>
-      <active>true</active>
+      <active>false</active>
       <protocol>http</protocol>
       <host>proxy.logti.etsmtl.ca</host>
       <port>3128</port>

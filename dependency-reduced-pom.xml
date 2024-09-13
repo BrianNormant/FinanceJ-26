@@ -7,6 +7,10 @@
   <version>1.0-SNAPSHOT</version>
   <description>FinanceJ is a personal finance Java application. A simple interface allows the user to track income/expenses vs budget. No accounting experience required.</description>
   <url>http://www.example.com</url>
+  <issueManagement>
+    <system>Trac</system>
+    <url>http://${host}/trac/</url>
+  </issueManagement>
   <developers>
     <developer>
       <name>Brian Normant</name>
@@ -21,11 +25,29 @@
       <name>Étienne Ferland</name>
     </developer>
   </developers>
+  <scm>
+    <url>http://gitlab-ce.logti.etsmtl.ca/BrianNormant/financej</url>
+  </scm>
   <organization>
     <name>ÉTS - LOG240 - Team 06</name>
     <url>http://www.etsmtl.ca</url>
   </organization>
   <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <artifactId>maven-site-plugin</artifactId>
+          <version>3.4</version>
+          <dependencies>
+            <dependency>
+              <groupId>org.apache.maven.wagon</groupId>
+              <artifactId>wagon-ssh</artifactId>
+              <version>2.10</version>
+            </dependency>
+          </dependencies>
+        </plugin>
+      </plugins>
+    </pluginManagement>
     <plugins>
       <plugin>
         <artifactId>maven-clean-plugin</artifactId>
@@ -92,10 +114,6 @@
           </filters>
         </configuration>
       </plugin>
-      <plugin>
-        <artifactId>maven-site-plugin</artifactId>
-        <version>3.4</version>
-      </plugin>
     </plugins>
   </build>
   <dependencies>
@@ -104,7 +122,7 @@
       <artifactId>junit-bom</artifactId>
       <version>5.11.0</version>
       <type>pom</type>
-      <scope>import</scope>
+      <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>org.junit.jupiter</groupId>
@@ -190,6 +208,18 @@
         </exclusion>
       </exclusions>
     </dependency>
+    <dependency>
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-site-plugin</artifactId>
+      <version>3.4</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.maven.skins</groupId>
+      <artifactId>maven-default-skin</artifactId>
+      <version>1.3</version>
+      <scope>compile</scope>
+    </dependency>
   </dependencies>
   <reporting>
     <plugins>
@@ -206,6 +236,23 @@
               <report>project-team</report>
               <report>plugins</report>
               <report>summary</report>
+              <report>issue-tracking</report>
+              <report>scm</report>
+            </reports>
+          </reportSet>
+        </reportSets>
+      </plugin>
+      <plugin>
+        <artifactId>maven-changes-plugin</artifactId>
+        <version>2.10</version>
+        <configuration>
+          <tracUser>${trac-username}</tracUser>
+          <tracPassword>${trac-password}</tracPassword>
+        </configuration>
+        <reportSets>
+          <reportSet>
+            <reports>
+              <report>trac-report</report>
             </reports>
           </reportSet>
         </reportSets>
@@ -214,8 +261,49 @@
         <artifactId>maven-javadoc-plugin</artifactId>
         <version>2.9.1</version>
       </plugin>
+      <plugin>
+        <artifactId>maven-checkstyle-plugin</artifactId>
+        <version>2.12.1</version>
+      </plugin>
+      <plugin>
+        <artifactId>maven-pmd-plugin</artifactId>
+        <version>2.5</version>
+        <configuration>
+          <sourceEncoding>UTF-8</sourceEncoding>
+          <rulesets>
+            <ruleset>/rulesets/basic.xml</ruleset>
+            <ruleset>/rulesets/design.xml</ruleset>
+          </rulesets>
+        </configuration>
+        <reportSets>
+          <reportSet>
+            <reports>
+              <report>pmd</report>
+            </reports>
+          </reportSet>
+        </reportSets>
+      </plugin>
+      <plugin>
+        <groupId>net.objectlab</groupId>
+        <artifactId>mvn-qalab-plugin</artifactId>
+        <version>2.2</version>
+        <reportSets>
+          <reportSet>
+            <reports>
+              <report>report-merge-chart</report>
+              <report>report-movers-all</report>
+            </reports>
+          </reportSet>
+        </reportSets>
+      </plugin>
     </plugins>
   </reporting>
+  <distributionManagement>
+    <site>
+      <id>${host}</id>
+      <url>scp://${admin-username}@${host}/var/www/log240/</url>
+    </site>
+  </distributionManagement>
   <properties>
     <main.class>ca.etsmtl.log240.financej.FinanceJ</main.class>
     <maven.compiler.source>8</maven.compiler.source>

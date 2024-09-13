@@ -8,8 +8,7 @@
   <version>1.0-SNAPSHOT</version>
 
   <name>FinanceJ</name>
-  <!-- FIXME change it to the project's website -->
-  <url>http://www.example.com</url>
+  <url>http://log240-20243-26.logti.etsmtl.ca/log240</url>
 
   <description>
     FinanceJ is a personal finance Java application. A simple interface allows the user to track income/expenses vs budget. No accounting experience required.
@@ -41,12 +40,19 @@
   </properties>
 
   <scm>
-    <url>http://gitlab-ce.logti.etsmtl.ca/BrianNormant/financej</url>
+    <url>https://gitlab-ce.logti.etsmtl.ca/BrianNormant/FinanceJ-Team26</url>
   </scm>
   <issueManagement>
     <system>Trac</system>
     <url>http://${host}/trac/</url>
   </issueManagement>
+
+  <distributionManagement>
+    <site>
+      <id>${host}</id>
+      <url>scp://${admin-username}@${host}/var/www/log240/</url>
+    </site>
+  </distributionManagement>
 
   <reporting>
     <plugins>
@@ -75,8 +81,8 @@
         <artifactId>maven-changes-plugin</artifactId>
         <version>2.10</version>
         <configuration>
-          <tracUser>${trac-username}</tracUser>
-          <tracPassword>${trac-password}</tracPassword>
+          <tracUser>admin</tracUser>
+          <tracPassword>admin</tracPassword>
         </configuration>
         <reportSets>
           <reportSet>
@@ -116,11 +122,11 @@
           </rulesets>
         </configuration>
       </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-site-plugin</artifactId>
-        <version>3.4</version>
-      </plugin>
+      <!-- <plugin> -->
+      <!--   <groupId>org.apache.maven.plugins</groupId> -->
+      <!--   <artifactId>maven-site-plugin</artifactId> -->
+      <!--   <version>3.4</version> -->
+      <!-- </plugin> -->
       <plugin>
         <groupId>net.objectlab</groupId>
         <artifactId>mvn-qalab-plugin</artifactId>
@@ -138,12 +144,16 @@
   </reporting>
 
   <dependencies>
+    <!-- <dependency> -->
+    <!--   <groupId>org.apache.maven.wagon</groupId> -->
+    <!--   <artifactId>wagon-ssh</artifactId> -->
+    <!--   <version>2.10</version> -->
+    <!-- </dependency> -->
     <dependency>
       <groupId>org.junit</groupId>
       <artifactId>junit-bom</artifactId>
       <version>5.11.0</version>
       <type>pom</type>
-      <scope>import</scope>
     </dependency>
     <dependency>
       <groupId>org.junit.jupiter</groupId>
@@ -180,13 +190,11 @@
       <groupId>org.apache.maven.plugins</groupId>
       <artifactId>maven-site-plugin</artifactId>
       <version>3.4</version>
-      <scope>site</scope>
     </dependency>
     <dependency>
       <groupId>org.apache.maven.skins</groupId>
       <artifactId>maven-default-skin</artifactId>
       <version>1.3</version>
-      <scope>site</scope>
     </dependency>
     <dependency>
       <groupId>org.apache.derby</groupId>
@@ -195,80 +203,95 @@
     </dependency>
   </dependencies>
   <build>
-    <!-- <pluginManagement> lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
+    <pluginManagement>
       <plugins>
-        <!-- clean lifecycle, see https://maven.apache.org/ref/current/maven-core/lifecycles.html#clean_Lifecycle -->
-        <plugin>
-          <artifactId>maven-clean-plugin</artifactId>
-          <version>3.4.0</version>
-        </plugin>
-        <!-- default lifecycle, jar packaging: see https://maven.apache.org/ref/current/maven-core/default-bindings.html#Plugin_bindings_for_jar_packaging -->
-        <plugin>
-          <artifactId>maven-resources-plugin</artifactId>
-          <version>3.3.1</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-compiler-plugin</artifactId>
-          <version>3.13.0</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-surefire-plugin</artifactId>
-          <version>3.3.0</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-jar-plugin</artifactId>
-          <version>3.4.2</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-install-plugin</artifactId>
-          <version>3.1.2</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-deploy-plugin</artifactId>
-          <version>3.1.2</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-project-info-reports-plugin</artifactId>
-          <version>3.6.1</version>
-        </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-shade-plugin</artifactId>
-          <version>3.6.0</version>
-          <configuration>
-            <shadeSourcesContent>true</shadeSourcesContent>
-            <transformers>
-              <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                <mainClass>${main.class}</mainClass>
-              </transformer>
-            </transformers>
-            <artifactSet>
-              <includes>
-                <include>org.apache.derby:derby</include>
-              </includes>
-            </artifactSet>
-            <filters>
-              <filter>
-                <artifact>org.apache.derby:derby</artifact>
-                <excludes>
-                  <exclude>META-INF/*.MF</exclude>
-                </excludes>
-              </filter>
-            </filters>
-          </configuration>
-          <executions>
-            <execution>
-              <phase>package</phase>
-              <goals>
-                <goal>shade</goal>
-              </goals>
-              <!-- <configuration>
-                <minimizeJar>true</minimizeJar>
-              </configuration> -->
-            </execution>
-          </executions>
+          <artifactId>maven-site-plugin</artifactId>
+          <version>3.4</version>
+          <dependencies>
+            <dependency><!-- add support for ssh/scp -->
+              <groupId>org.apache.maven.wagon</groupId>
+              <artifactId>wagon-ssh</artifactId>
+              <version>2.10</version>
+            </dependency>
+          </dependencies>
         </plugin>
       </plugins>
-      <!-- </pluginManagement> -->
-  </build>
+    </pluginManagement>    <!-- <pluginManagement> lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
+    <plugins>
+      <!-- clean lifecycle, see https://maven.apache.org/ref/current/maven-core/lifecycles.html#clean_Lifecycle -->
+      <plugin>
+        <artifactId>maven-clean-plugin</artifactId>
+        <version>3.4.0</version>
+      </plugin>
+      <!-- default lifecycle, jar packaging: see https://maven.apache.org/ref/current/maven-core/default-bindings.html#Plugin_bindings_for_jar_packaging -->
+      <plugin>
+        <artifactId>maven-resources-plugin</artifactId>
+        <version>3.3.1</version>
+      </plugin>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.13.0</version>
+      </plugin>
+      <plugin>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>3.3.0</version>
+      </plugin>
+      <plugin>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>3.4.2</version>
+      </plugin>
+      <plugin>
+        <artifactId>maven-install-plugin</artifactId>
+        <version>3.1.2</version>
+      </plugin>
+      <plugin>
+        <artifactId>maven-deploy-plugin</artifactId>
+        <version>3.1.2</version>
+      </plugin>
+      <plugin>
+        <artifactId>maven-project-info-reports-plugin</artifactId>
+        <version>3.6.1</version>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>3.6.0</version>
+        <configuration>
+          <shadeSourcesContent>true</shadeSourcesContent>
+          <transformers>
+            <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+              <mainClass>${main.class}</mainClass>
+            </transformer>
+          </transformers>
+          <artifactSet>
+            <includes>
+              <include>org.apache.derby:derby</include>
+            </includes>
+          </artifactSet>
+          <filters>
+            <filter>
+              <artifact>org.apache.derby:derby</artifact>
+              <excludes>
+                <exclude>META-INF/*.MF</exclude>
+              </excludes>
+            </filter>
+          </filters>
+        </configuration>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+            <!-- <configuration>
+              <minimizeJar>true</minimizeJar>
+            </configuration> -->
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+    <!-- </pluginManagement> -->
+</build>
 </project>
