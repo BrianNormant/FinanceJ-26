@@ -28,7 +28,7 @@
 				'';
 
 				mvnJdk = pkgs.jdk8;
-				mvnHash = "sha256-mrC/vszYlFWw+8BbuDbPsp/btnko/f3Opiv9GehwipM=";
+				mvnHash = "sha256-u+5wcKc4S6RJF22yWAT5jtyXjq68EKWJC3H1UHH2dgo==";
 
 				buildOffline = true;
 			};

@@ -36,13 +36,12 @@
       <id>ets-log240</id>
       <properties>
         <!-- Parametres de la machine virtuelle et son administrateur -->
-        <host>log240-20121-X.logti.etsmtl.ca</host>
-        <admin-username>MyAdminUser</admin-username>
-        <admin-password>MyAdminPassword</admin-password>
-        
+        <host>log240-20243-26.logti.etsmtl.ca</host>
+        <admin-username>system</admin-username>
+        <admin-password>SystemPass26</admin-password>
         <!-- Parametres de TRAC -->
-        <trac-username>MyTracUser</trac-username>
-        <trac-password>MyTracPasswd</trac-password>
+        <trac-username>admin</trac-username>
+        <trac-password>admin</trac-password>
       </properties>
     </profile>
   </profiles>
