@@ -73,7 +73,7 @@ public class FinanceJ extends javax.swing.JFrame {
 
         try {
             s = conn.createStatement();
-            if (!DBUtils.ChkTableAccount(conn)) {
+            if (!DBUtils.chkTableAccount(conn)) {
                 System.out.println(" . . . . creating table account");
                 s.execute(CreateStringAccount);
             }

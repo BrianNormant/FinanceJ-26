@@ -6,7 +6,7 @@
   <name>FinanceJ</name>
   <version>1.0-SNAPSHOT</version>
   <description>FinanceJ is a personal finance Java application. A simple interface allows the user to track income/expenses vs budget. No accounting experience required.</description>
-  <url>http://www.example.com</url>
+  <url>http://log240-20243-26.logti.etsmtl.ca/log240</url>
   <issueManagement>
     <system>Trac</system>
     <url>http://${host}/trac/</url>
@@ -26,7 +26,7 @@
     </developer>
   </developers>
   <scm>
-    <url>http://gitlab-ce.logti.etsmtl.ca/BrianNormant/financej</url>
+    <url>https://gitlab-ce.logti.etsmtl.ca/BrianNormant/FinanceJ-Team26</url>
   </scm>
   <organization>
     <name>ÉTS - LOG240 - Team 06</name>
@@ -246,8 +246,8 @@
         <artifactId>maven-changes-plugin</artifactId>
         <version>2.10</version>
         <configuration>
-          <tracUser>${trac-username}</tracUser>
-          <tracPassword>${trac-password}</tracPassword>
+          <tracUser>admin</tracUser>
+          <tracPassword>admin</tracPassword>
         </configuration>
         <reportSets>
           <reportSet>

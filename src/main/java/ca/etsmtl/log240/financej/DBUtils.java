@@ -45,7 +45,7 @@ public class DBUtils {
 
     /**  END  getWishItem  ***/
     /***      Check for  WISH_LIST table    ****/
-    public static boolean wwdChk4Table(Connection conTst) throws SQLException {
+    public static boolean wwdChk4Table(final Connection conTst) throws SQLException {
         boolean chk = true;
         boolean doCreate = false;
         try {
@@ -55,8 +55,7 @@ public class DBUtils {
             String theError = (sqle).getSQLState();
             //   System.out.println("  Utils GOT:  " + theError);
             /** If table exists will get -  WARNING 02000: No row was found **/
-            if (theError.equals("42X05")) // Table does not exist
-            {
+            if (theError.equals("42X05")) {// Table does not exist
                 return false;
             } else if (theError.equals("42X14") || theError.equals("42821")) {
                 System.out.println("WwdChk4Table: Incorrect table definition. Drop table WISH_LIST and rerun this program");
@@ -70,7 +69,7 @@ public class DBUtils {
         return true;
     }
 
-    public static boolean ChkTableAccount(Connection conTst) throws SQLException {
+    public static boolean chkTableAccount(final Connection conTst) throws SQLException {
         boolean chk = true;
         boolean doCreate = false;
         try {
@@ -145,7 +144,7 @@ public class DBUtils {
         return true;
     }
     
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
         // This method allows stand-alone testing of the getWishItem method
         String answer;
         do {

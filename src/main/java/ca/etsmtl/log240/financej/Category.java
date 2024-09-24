@@ -6,7 +6,6 @@ package ca.etsmtl.log240.financej;
  */
 
 import java.sql.*;
-import java.util.*;
 import javax.swing.table.*;
 import javax.swing.*;
 
@@ -16,7 +15,6 @@ import javax.swing.*;
  */
 public class Category extends javax.swing.JDialog {
 
-    private Connection conn = null;
     private CategoryListTableModel dataModel;
 
     /** Creates new form Category */
@@ -27,8 +25,7 @@ public class Category extends javax.swing.JDialog {
     }
 
     public void SetDBConnection(Connection DBConn) {
-        conn = DBConn;
-        dataModel = new CategoryListTableModel(conn);
+        dataModel = new CategoryListTableModel(DBConn);
         CategoryListTable.setModel(dataModel);
     }
 
@@ -238,7 +235,7 @@ public class Category extends javax.swing.JDialog {
 
 class CategoryListTableModel extends AbstractTableModel {
 
-    private String[] columnNames = {"Name", "Description", "Budget"};
+    private final String[] columnNames = {"Name", "Description", "Budget"};
     private Connection conn = null;
 
     public CategoryListTableModel(Connection DBConn) {
@@ -260,6 +257,8 @@ class CategoryListTableModel extends AbstractTableModel {
                 while (AccountResult.next()) {
                     return AccountResult.getInt(1);
                 }
+                AccountResult.close();
+                s.close();
             } catch (Throwable e) {
                 System.out.println(" . . . exception thrown: in CategoryListTableModel getRowCount");
                 e.printStackTrace();
@@ -292,6 +291,8 @@ class CategoryListTableModel extends AbstractTableModel {
                             return CategoryResult.getFloat(3);
                         }
                     }
+                    CategoryResult.close();
+                    s.close();
                     CurrentRow++;
                 }
             } catch (Throwable e) {
@@ -315,11 +316,7 @@ class CategoryListTableModel extends AbstractTableModel {
         //no matter where the cell appears onscreen.
 
 
-        if (col == 0) {
-            return false;
-        } else {
-            return true;
-        }
+        return col != 0;
     }
 
     public void setValueAt(Object value, int row, int col) {
@@ -341,6 +338,8 @@ class CategoryListTableModel extends AbstractTableModel {
             s.execute(SQLString);
 
             fireTableCellUpdated(row, col);
+
+            s.close();
         } catch (Throwable e) {
             System.out.println(" . . . exception thrown: in setValueAt in Category.java");
             e.printStackTrace();
@@ -360,6 +359,8 @@ class CategoryListTableModel extends AbstractTableModel {
                 System.out.println(SQLString);
                 s.executeUpdate(SQLString);
                 fireTableDataChanged();
+
+                s.close();
             } catch (Throwable e) {
                 System.out.println(" . . . exception thrown: in CategoryTableModel DeleteAccount");
                 e.printStackTrace();
