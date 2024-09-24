@@ -59,10 +59,13 @@
 				zsh
 			];
 			shellHook = ''
-				tmux rename-window "nvim"
-				tmux rename-session "FinanceJ"
-				set SHELL zsh
-				exec nvim
+				if [[ $TMUX ]]; then
+					tmux rename-window "nvim"
+					tmux rename-session "FinanceJ"
+				fi
+				if (command -v nvim); then
+					exec nvim
+				fi
 			'';
 		};
 	};
